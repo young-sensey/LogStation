@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DeviceLogUpdateRequest;
+use App\Http\Requests\DeviceLogViewRequest;
 use App\Models\Device;
 use App\Models\DeviceLog;
 use Illuminate\Http\Response;
@@ -12,9 +13,10 @@ class DeviceLogController extends Controller
     /**
      * Show the profile for a given user.
      */
-    public function view(): array
+    public function view(DeviceLogViewRequest $request): array
     {
-        return ['test'];
+        $deviceId = $request->input('device_id');
+        return DeviceLog::query()->where('device_id', $deviceId)->get()->toArray();
     }
 
     public function upload(DeviceLogUpdateRequest $request): Response

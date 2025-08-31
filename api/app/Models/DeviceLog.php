@@ -37,4 +37,8 @@ class DeviceLog extends Model
     protected $fillable = [
         'device_id', 'log_date'
     ];
+
+    protected $casts = [
+        'log_date' => 'datetime:Y-m-d\TH:i:s\Z',
+    ];
 }
