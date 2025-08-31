@@ -11,7 +11,9 @@ use Illuminate\Http\Response;
 class DeviceLogController extends Controller
 {
     /**
-     * Show the profile for a given user.
+     * Show device logs by device_id.
+     * @param DeviceLogViewRequest $request
+     * @return array
      */
     public function view(DeviceLogViewRequest $request): array
     {
@@ -19,11 +21,18 @@ class DeviceLogController extends Controller
         return DeviceLog::query()->where('device_id', $deviceId)->get()->toArray();
     }
 
+    /**
+     * Add device log.
+     * @param DeviceLogUpdateRequest $request
+     * @return Response
+     */
     public function upload(DeviceLogUpdateRequest $request): Response
     {
         $deviceId = $request->input('device_id');
-        $device = Device::query()->find($deviceId);
-        if ($device === null) {
+
+        /** @var Device $authDevice */
+        $authDevice = auth()->user();
+        if ($deviceId !== $authDevice->uuid) {
             return response('', 403);
         }
 

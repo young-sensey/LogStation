@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @property string $uuid Идентификатор
+ * @property string $name название
+ */
 class Device extends Model
 {
     /** @use HasFactory<DeviceFactory> */
